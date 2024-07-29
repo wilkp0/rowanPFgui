@@ -48,7 +48,7 @@ def render(self, rewards, game_over=False, cascading_frame_id=None, date=None, t
         #total duration = first_datetime - second_datetime
         #timestep_duration_seconds = self.__chronic.get_timestep_duration()
         timestep_duration_seconds = 3600
-        from rowanpf.renderer import Renderer
+        from rowanpf.garbage.old_renderer import Renderer
 
         numberofbuses = 8
         return Renderer(numberofbuses, idx_or, idx_ex, are_prods, are_loads,
@@ -174,3 +174,31 @@ def run(iterations):
 
     for i_iter in range(iterations):
         render()
+
+
+
+
+
+    def display_image(self, fig, img_path, move_down_amount=0, alpha=1):
+        img = Image.open(img_path)
+        img_width, img_height = img.size
+        from matplotlib.transforms import Affine2D
+
+        ax = fig.add_subplot(111)
+        transform = Affine2D().translate(0, -move_down_amount) + ax.transData
+        ax.imshow(img, transform=transform, extent=[0, img_width, 0, img_height], alpha=alpha)
+        ax.axis('off')
+        img_path = 'rowan_map2.png'
+        img = Image.open('rowan_map2.png')
+        img_width, img_height = img.size
+
+        # Display the image
+        move_down_amount = 200  # Adjust as needed
+        ax, img_width, img_height = self.display_image(fig, img_path, move_down_amount)
+        aspect_ratio = img_width / img_height
+        fig_width = self.video_width - self.left_menu_shape[0] - 10  # Adjust width based on remaining space
+        fig_height = int(fig_width / aspect_ratio)
+        my_dpi = 200
+        fig = plt.figure(figsize=(fig_width / my_dpi, fig_height / my_dpi), dpi=my_dpi,
+                        facecolor=[c / 255. for c in self.background_color], clear=True)
+        return ax, img_width, img_height

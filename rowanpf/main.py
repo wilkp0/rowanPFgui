@@ -90,7 +90,7 @@ class Display():
             print("loads", are_loads)
             timestep_duration_seconds = 3600
 
-            from trying import Renderer
+            from renderer import Renderer
             #from renderer import Renderer
             number_of_nodes = 8
             #print("len(self.grid.number_elements_per_substations)",len(self.grid.number_elements_per_substations))
